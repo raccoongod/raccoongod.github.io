@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>PT 1회 결제</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <script src="https://js.tosspayments.com/v2/standard"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; padding: 40px; }
+    button { padding:14px 32px; border:0; border-radius:8px; background:#111; color:#fff; font-weight:700; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h2>Fiting PT 1회권 · 30,000원</h2>
+  <button id="pay">결제하기</button>
+
+  <script>
+    const clientKey = 'live_gck_jExPeJWYVQeq5aRapJYqV49R5gvN'; // ← 너의 클라이언트 키
+    const tp = TossPayments(clientKey);
+
+    document.getElementById('pay').addEventListener('click', async () => {
+      const orderId = 'fit-pt-' + new Date().toISOString().slice(0,10) + '-' + Date.now();
+      await tp.requestPayment({
+        method: 'CARD',
+        amount: 30000,
+        orderId,
+        orderName: 'PT 1회권',
+        successUrl: 'https://fiting.co.kr/paymentsuccess',
+        failUrl:    'https://fiting.co.kr/paymentfailed',
+      });
+    });
+  </script>
+</body>
+</html>
